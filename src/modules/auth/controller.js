@@ -20,13 +20,12 @@ const register = async (req, res) => {
 };
 
 const login = async (req, res) => {
-  const { email, password } = req.body;
+  const { email, password: _password } = req.body;
 
   // TODO: Find user by email in DB (e.g. const user = await User.findOne({ email }))
   // TODO: If not found, throw 401 Unauthorized
-  // TODO: Verify password (e.g. const match = await bcrypt.compare(password, user.password))
+  // TODO: Verify password (e.g. const match = await bcrypt.compare(_password, user.password))
   // TODO: If no match, throw 401 Unauthorized
-  void password;
 
   const token = jwt.sign({ email }, config.jwtSecret, {
     expiresIn: config.jwtExpiresIn,

@@ -8,16 +8,14 @@ const xss = require('xss-clean');
 const hpp = require('hpp');
 const config = require('./config/env');
 const logger = require('./utils/logger');
-const { apiRouter } = require('./routes');
+const { apiRouter, initDocs } = require('./routes');
+const requestId = require('./middlewares/requestId');
+const rateLimiter = require('./middlewares/rateLimiter');
+const apiKey = require('./middlewares/apiKey');
 const notFound = require('./middlewares/notFound');
 const errorHandler = require('./middlewares/errorHandler');
 
 const app = express();
-
-app.use((req, res, next) => {
-  res.set('X-Content-Type-Options', 'nosniff');
-  next();
-});
 
 app.use(helmet({
   contentSecurityPolicy: false,
@@ -33,12 +31,11 @@ app.use(cors({
   credentials: true,
 }));
 
+app.use(requestId);
+app.use(rateLimiter());
 app.use(compression());
-
 app.use(mongoSanitize());
-
 app.use(xss());
-
 app.use(hpp());
 
 app.use(express.json({ limit: '10kb' }));
@@ -49,7 +46,9 @@ if (config.enableRequestLog) {
   app.use(morgan('combined', { stream }));
 }
 
-app.use('/api', apiRouter);
+app.use('/api', apiKey, apiRouter);
+
+initDocs(app);
 
 app.use(notFound);
 app.use(errorHandler);

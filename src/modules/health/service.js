@@ -1,3 +1,6 @@
+const mongoose = require('mongoose');
+const { redisClient } = require('../../config/redis');
+
 const getHealth = async () => {
   return {
     status: 'ok',
@@ -14,7 +17,6 @@ const getReady = async () => {
 
   try {
     if (process.env.MONGODB_URI) {
-      const mongoose = require('mongoose');
       const state = mongoose.connection.readyState;
       checks.mongodb = state === 1 ? 'ok' : 'error';
     }
@@ -24,7 +26,6 @@ const getReady = async () => {
 
   try {
     if (process.env.REDIS_URL) {
-      const { redisClient } = require('../config/redis');
       checks.redis = redisClient && redisClient.isReady ? 'ok' : 'error';
     }
   } catch {

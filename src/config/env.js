@@ -7,7 +7,11 @@ const envSchema = Joi.object({
   ENABLE_REQUEST_LOG: Joi.string().valid('true', 'false').default('true'),
   RATE_LIMIT_WINDOW_MS: Joi.number().default(900000),
   RATE_LIMIT_MAX: Joi.number().default(100),
-  JWT_SECRET: Joi.string().default('secret'),
+  JWT_SECRET: Joi.when('NODE_ENV', {
+    is: 'production',
+    then: Joi.string().required(),
+    otherwise: Joi.string().default('dev-secret-change-in-production'),
+  }),
   JWT_EXPIRES_IN: Joi.string().default('7d'),
   MONGODB_URI: Joi.string().optional(),
   REDIS_URL: Joi.string().optional(),

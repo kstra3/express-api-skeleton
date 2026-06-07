@@ -1,8 +1,9 @@
 const { LRUCache } = require('lru-cache');
+const config = require('../config/env');
 
 const rateLimiter = (options = {}) => {
-  const windowMs = parseInt(process.env.RATE_LIMIT_WINDOW_MS || '900000', 10);
-  const limit = parseInt(process.env.RATE_LIMIT_MAX || '100', 10);
+  const windowMs = options.windowMs || config.rateLimitWindowMs;
+  const limit = options.limit || config.rateLimitMax;
   const maxKeys = options.maxKeys || 5000;
 
   const cache = new LRUCache({

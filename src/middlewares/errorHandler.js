@@ -9,10 +9,16 @@ const errorHandler = (err, req, res, _next) => {
     statusCode = res.statusCode;
   }
 
-  res.status(statusCode).json({
+  const body = {
     success: false,
     message: err.message || httpStatus[statusCode] || 'Internal Server Error',
-  });
+  };
+
+  if (process.env.NODE_ENV === 'development') {
+    body.stack = err.stack;
+  }
+
+  res.status(statusCode).json(body);
 };
 
 module.exports = errorHandler;
