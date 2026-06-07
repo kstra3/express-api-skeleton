@@ -28,4 +28,6 @@ module.exports = {
   rateLimitWindowMs: value.RATE_LIMIT_WINDOW_MS,
   rateLimitMax: value.RATE_LIMIT_MAX,
   corsOrigin: value.CORS_ORIGIN,
+  jwtSecret: value.JWT_SECRET,
+  jwtExpiresIn: value.JWT_EXPIRES_IN,
 };

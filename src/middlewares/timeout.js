@@ -1,9 +1,10 @@
 const timeout = (ms) => (req, res, next) => {
   const timer = setTimeout(() => {
-    res.status(504).json({
-      success: false,
-      message: 'Gateway Timeout',
-    });
+    if (res.headersSent) return;
+    req.timedOut = true;
+    const err = new Error('Gateway Timeout');
+    err.status = 504;
+    next(err);
   }, ms);
 
   res.on('finish', () => clearTimeout(timer));

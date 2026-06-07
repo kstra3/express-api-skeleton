@@ -1,6 +1,5 @@
 const ApiResponse = require('../../utils/response');
 const userService = require('./service');
-const catchAsync = require('../../utils/catchAsync');
 
 const getUsers = (req, res) => {
   const response = new ApiResponse(res);
@@ -8,11 +7,11 @@ const getUsers = (req, res) => {
   response.success(users);
 };
 
-const createUser = catchAsync((req, res) => {
+const createUser = (req, res) => {
   const response = new ApiResponse(res);
   const user = userService.createUser(req.body);
   response.success(user, 201);
-});
+};
 
 module.exports = {
   getUsers,

@@ -1,19 +1,20 @@
 const { createClient } = require('redis');
+const logger = require('../utils/logger');
 
 let redisClient = null;
 
 const connectRedis = async () => {
   const url = process.env.REDIS_URL;
   if (!url) {
-    console.log('REDIS_URL not set, skipping Redis connection');
+    logger.info('REDIS_URL not set, skipping Redis connection');
     return;
   }
 
   redisClient = createClient({ url });
-  redisClient.on('error', (err) => console.error('Redis error', err));
-  redisClient.on('connect', () => console.log('Redis connected'));
+  redisClient.on('error', (err) => logger.error(`Redis error: ${err.message}`));
+  redisClient.on('connect', () => logger.info('Redis connected'));
 
   await redisClient.connect();
 };
 
-module.exports = { connectRedis, redisClient };
+module.exports = { connectRedis, get redisClient() { return redisClient; } };

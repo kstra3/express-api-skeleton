@@ -1,4 +1,4 @@
-const LRUCache = require('lru-cache');
+const { LRUCache } = require('lru-cache');
 
 const rateLimiter = (options = {}) => {
   const windowMs = parseInt(process.env.RATE_LIMIT_WINDOW_MS || '900000', 10);

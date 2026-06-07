@@ -12,10 +12,11 @@ const storage = multer.diskStorage({
 });
 
 const fileFilter = (_req, file, cb) => {
-  const allowed = /jpeg|jpg|png|pdf|txt/;
-  const ext = allowed.test(path.extname(file.originalname).toLowerCase());
-  const mime = allowed.test(file.mimetype);
-  cb(null, ext && mime);
+  const allowedExt = /\.(jpeg|jpg|png|pdf|txt)$/i;
+  const allowedMime = /^(image\/(jpeg|png)|application\/pdf|text\/plain)$/;
+  const extOk = allowedExt.test(path.extname(file.originalname));
+  const mimeOk = allowedMime.test(file.mimetype);
+  cb(null, extOk && mimeOk);
 };
 
 const upload = multer({

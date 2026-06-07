@@ -7,7 +7,7 @@ const getUsers = () => users;
 const createUser = (data) => {
   if (!data.name || !data.email) {
     const error = new Error('Name and email are required');
-    error.code = 400;
+    error.status = 400;
     throw error;
   }
 

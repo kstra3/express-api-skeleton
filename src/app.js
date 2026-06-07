@@ -7,6 +7,7 @@ const mongoSanitize = require('express-mongo-sanitize');
 const xss = require('xss-clean');
 const hpp = require('hpp');
 const config = require('./config/env');
+const logger = require('./utils/logger');
 const { apiRouter } = require('./routes');
 const notFound = require('./middlewares/notFound');
 const errorHandler = require('./middlewares/errorHandler');
@@ -44,7 +45,7 @@ app.use(express.json({ limit: '10kb' }));
 app.use(express.urlencoded({ extended: true, limit: '10kb' }));
 
 if (config.enableRequestLog) {
-  const stream = { write: (message) => console.log(message.trim()) };
+  const stream = { write: (message) => logger.info(message.trim()) };
   app.use(morgan('combined', { stream }));
 }
 

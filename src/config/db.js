@@ -1,17 +1,18 @@
 const mongoose = require('mongoose');
+const logger = require('../utils/logger');
 
 const connectDB = async () => {
   const uri = process.env.MONGODB_URI;
   if (!uri) {
-    console.log('MONGODB_URI not set, skipping MongoDB connection');
+    logger.info('MONGODB_URI not set, skipping MongoDB connection');
     return;
   }
 
   try {
     await mongoose.connect(uri);
-    console.log('MongoDB connected');
+    logger.info('MongoDB connected');
   } catch (err) {
-    console.error('MongoDB connection error:', err.message);
+    logger.error(`MongoDB connection error: ${err.message}`);
     process.exit(1);
   }
 };

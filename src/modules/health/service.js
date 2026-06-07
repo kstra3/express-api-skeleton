@@ -24,8 +24,8 @@ const getReady = async () => {
 
   try {
     if (process.env.REDIS_URL) {
-      // Placeholder for actual Redis ping
-      checks.redis = 'ok';
+      const { redisClient } = require('../config/redis');
+      checks.redis = redisClient && redisClient.isReady ? 'ok' : 'error';
     }
   } catch {
     checks.redis = 'error';

@@ -3,7 +3,7 @@ const validateBody = (schema) => (req, res, next) => {
   if (error) {
     const message = error.details.map((d) => d.message).join(', ');
     const err = new Error(message);
-    err.code = 400;
+    err.status = 400;
     return next(err);
   }
   next();
