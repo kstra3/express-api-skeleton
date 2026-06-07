@@ -8,6 +8,8 @@ const xss = require('xss-clean');
 const hpp = require('hpp');
 const config = require('./config/env');
 const { apiRouter } = require('./routes');
+const notFound = require('./middlewares/notFound');
+const errorHandler = require('./middlewares/errorHandler');
 
 const app = express();
 
@@ -47,5 +49,8 @@ if (config.enableRequestLog) {
 }
 
 app.use('/api', apiRouter);
+
+app.use(notFound);
+app.use(errorHandler);
 
 module.exports = app;
