@@ -1,8 +1,9 @@
-import express from 'express';
-import { catchAsync } from '../utils/catchAsync.js';
-import * as healthController from './controller.js';
+const express = require('express');
+const router = express.Router();
+const catchAsync = require('../../utils/catchAsync');
+const healthController = require('./controller');
 
-export const healthRouter = express.Router();
+router.get('/', catchAsync(healthController.getHealth));
+router.get('/ready', catchAsync(healthController.getReady));
 
-healthRouter.get('/', catchAsync(healthController.getHealth));
-healthRouter.get('/ready', catchAsync(healthController.getReady));
+module.exports = router;

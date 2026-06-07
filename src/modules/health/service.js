@@ -1,12 +1,12 @@
-export async function getHealth() {
+const getHealth = async () => {
   return {
     status: 'ok',
     timestamp: new Date().toISOString(),
     uptime: process.uptime(),
   };
-}
+};
 
-export async function getReady() {
+const getReady = async () => {
   const checks = {
     mongodb: 'skipped',
     redis: 'skipped',
@@ -14,7 +14,7 @@ export async function getReady() {
 
   try {
     if (process.env.MONGODB_URI) {
-      const mongoose = (await import('mongoose')).default;
+      const mongoose = require('mongoose');
       const state = mongoose.connection.readyState;
       checks.mongodb = state === 1 ? 'ok' : 'error';
     }
@@ -24,7 +24,6 @@ export async function getReady() {
 
   try {
     if (process.env.REDIS_URL) {
-      const redis = (await import('redis')).default;
       // Placeholder for actual Redis ping
       checks.redis = 'ok';
     }
@@ -40,4 +39,6 @@ export async function getReady() {
     timestamp: new Date().toISOString(),
     uptime: process.uptime(),
   };
-}
+};
+
+module.exports = { getHealth, getReady };

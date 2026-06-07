@@ -1,5 +1,6 @@
 const ApiResponse = require('../../utils/response');
 const userService = require('./service');
+const catchAsync = require('../../utils/catchAsync');
 
 const getUsers = (req, res) => {
   const response = new ApiResponse(res);

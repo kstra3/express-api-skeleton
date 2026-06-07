@@ -3,7 +3,6 @@
   "version": "1.0.0",
   "description": "Production-ready Express REST API skeleton",
   "private": true,
-  "workspaces": ["express-api-skeleton"],
   "main": "src/server.js",
   "scripts": {
     "dev": "nodemon src/server.js",

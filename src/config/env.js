@@ -9,8 +9,8 @@ const envSchema = Joi.object({
   RATE_LIMIT_MAX: Joi.number().default(100),
   JWT_SECRET: Joi.string().default('secret'),
   JWT_EXPIRES_IN: Joi.string().default('7d'),
-  MONGODB_URI: Joi.string().allow('').optional(),
-  REDIS_URL: Joi.string().allow('').optional(),
+  MONGODB_URI: Joi.string().optional(),
+  REDIS_URL: Joi.string().optional(),
   CORS_ORIGIN: Joi.string().default('*'),
 }).unknown();
 

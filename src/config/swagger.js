@@ -9,7 +9,9 @@ const options = {
       version: '1.0.0',
       description: 'Production-ready Express REST API',
     },
-    servers: [{ url: 'http://localhost:3000' }],
+    servers: [
+      { url: 'http://localhost:3000' },
+    ],
   },
   apis: ['./src/routes/**/*.js', './src/modules/**/*.js'],
 };

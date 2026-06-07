@@ -1,14 +1,16 @@
-import ApiResponse from '../../utils/response.js';
-import * as healthService from './service.js';
+const ApiResponse = require('../../utils/response');
+const healthService = require('./service');
 
-export async function getHealth(req, res) {
+const getHealth = async (req, res) => {
   const response = new ApiResponse(res);
   const data = await healthService.getHealth();
   response.success(data);
-}
+};
 
-export async function getReady(req, res) {
+const getReady = async (req, res) => {
   const response = new ApiResponse(res);
   const data = await healthService.getReady();
   response.success(data);
-}
+};
+
+module.exports = { getHealth, getReady };

@@ -1,13 +1,11 @@
-import express from 'express';
-import { swaggerDocs } from './swagger.js';
-import { connectDB } from './db.js';
-import { connectRedis } from './redis.js';
+const express = require('express');
+const { swaggerDocs } = require('../config/swagger');
 
-export const apiRouter = express.Router();
+const apiRouter = express.Router();
 
-apiRouter.use('/health', (await import('./modules/health/routes.js')).default);
-apiRouter.use('/users', (await import('./modules/users/routes.js')).default);
-apiRouter.use('/auth', (await import('./modules/auth/routes.js')).default);
-apiRouter.use('/upload', (await import('./modules/upload/routes.js')).default);
+apiRouter.use('/health', require('../modules/health/routes'));
+apiRouter.use('/users', require('../modules/users/routes'));
+apiRouter.use('/auth', require('../modules/auth/routes'));
+apiRouter.use('/upload', require('../modules/upload/routes'));
 
-export const initDocs = (app) => swaggerDocs(app);
+module.exports = { apiRouter, initDocs: (app) => swaggerDocs(app) };

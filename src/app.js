@@ -1,14 +1,13 @@
-import express from 'express';
-import cors from 'cors';
-import helmet from 'helmet';
-import compression from 'compression';
-import morgan from 'morgan';
-import mongoSanitize from 'express-mongo-sanitize';
-import xss from 'xss-clean';
-import hpp from 'hpp';
-
-import { env } from '../config/env.js';
-import { apiRouter } from './routes/index.js';
+const express = require('express');
+const cors = require('cors');
+const helmet = require('helmet');
+const compression = require('compression');
+const morgan = require('morgan');
+const mongoSanitize = require('express-mongo-sanitize');
+const xss = require('xss-clean');
+const hpp = require('hpp');
+const config = require('./config/env');
+const { apiRouter } = require('./routes');
 
 const app = express();
 
@@ -27,7 +26,7 @@ app.use(helmet({
 }));
 
 app.use(cors({
-  origin: env.corsOrigin,
+  origin: config.corsOrigin,
   credentials: true,
 }));
 
@@ -42,11 +41,11 @@ app.use(hpp());
 app.use(express.json({ limit: '10kb' }));
 app.use(express.urlencoded({ extended: true, limit: '10kb' }));
 
-if (env.enableRequestLog) {
+if (config.enableRequestLog) {
   const stream = { write: (message) => console.log(message.trim()) };
   app.use(morgan('combined', { stream }));
 }
 
 app.use('/api', apiRouter);
 
-export default app;
+module.exports = app;

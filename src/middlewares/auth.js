@@ -15,10 +15,10 @@ const authMiddleware = (req, res, next) => {
     const decoded = jwt.verify(token, process.env.JWT_SECRET || 'fallback-secret');
     req.user = decoded;
     next();
-  } catch (err) {
-    const error = new Error('Invalid or expired token');
-    error.code = 401;
-    next(error);
+  } catch {
+    const _error = new Error('Invalid or expired token');
+    _error.code = 401;
+    next(_error);
   }
 };
 

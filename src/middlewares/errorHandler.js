@@ -1,7 +1,6 @@
 const httpStatus = require('http-status');
-const config = require('../config/env');
 
-const errorHandler = (err, req, res, next) => {
+const errorHandler = (err, req, res, _next) => {
   let statusCode = httpStatus.INTERNAL_SERVER_ERROR;
 
   if (err.code) {
@@ -12,9 +11,7 @@ const errorHandler = (err, req, res, next) => {
     statusCode = res.statusCode;
   }
 
-  res.status(statusCode);
-
-  res.json({
+  res.status(statusCode).json({
     success: false,
     message: err.message || httpStatus[statusCode] || 'Internal Server Error',
   });

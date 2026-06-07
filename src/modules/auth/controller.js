@@ -1,7 +1,7 @@
 const jwt = require('jsonwebtoken');
 
 const register = (req, res) => {
-  const { email, password } = req.body;
+  const { email, password: _password } = req.body;
   const token = jwt.sign({ email }, process.env.JWT_SECRET || 'fallback-secret', {
     expiresIn: process.env.JWT_EXPIRES_IN || '7d',
   });
@@ -9,7 +9,7 @@ const register = (req, res) => {
 };
 
 const login = (req, res) => {
-  const { email, password } = req.body;
+  const { email, password: _password } = req.body;
   const token = jwt.sign({ email }, process.env.JWT_SECRET || 'fallback-secret', {
     expiresIn: process.env.JWT_EXPIRES_IN || '7d',
   });

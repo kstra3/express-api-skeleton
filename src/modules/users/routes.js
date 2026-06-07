@@ -1,6 +1,5 @@
 const express = require('express');
-const { validateBody } = require('../middlewares/validate');
-const { authMiddleware } = require('../middlewares/auth');
+const { validateBody } = require('../../middlewares/validate');
 const { createUserSchema } = require('../../validations/user.validation');
 const catchAsync = require('../../utils/catchAsync');
 const userController = require('./controller');
